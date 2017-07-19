@@ -2,16 +2,26 @@
 
 $roboto-slab: 'Raleway', serif;
 
+.scrollable-container {
+
+}
+html {
+    overflow-x: hidden;
+}
+
 .dh4-website-bg {
         top: 0;
         left: 0;
         display: flex;
         background-size: cover;
-        position: fixed; 
         min-width: 100%;
         min-height: 100%;
         align-items: center;
         justify-content: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: absolute;
+        background-color: #22222a;
 
         @keyframes move-twink-back {
                 from {background-position:0 0;}
@@ -61,7 +71,7 @@ $roboto-slab: 'Raleway', serif;
         .dh4-stars {
             background: transparent url('img/dh4_stars.png') top center;
             z-index: 4;
-            position: absolute;
+            position: fixed;
             top: 10%;
             left: 60%;
             height: 184px;
@@ -95,11 +105,21 @@ $roboto-slab: 'Raleway', serif;
             }
         }
 
+        a {
+            color: white;
+            padding-left: 5px;
+        }
+
+        img {
+            padding: 5px;
+        }
+
         .content-container{
                 background-color: rgba(60, 60, 60, 0.5);
                 display: flex;
                 padding: 30px 10px;
                 margin-top: 40px;
+                margin-bottom: 40px;
                 -webkit-justify-content: center;
                 justify-content: center;
                 z-index: 5;
@@ -117,6 +137,17 @@ $roboto-slab: 'Raleway', serif;
                         font-family: $roboto-slab;
                         color: white
                     }
+                    .date {
+                        padding-top: 10px;
+                        font-size: 16px;
+                        display: flex;
+                        margin: 0;
+                        font-family: $roboto-slab;
+                        color: white
+                    }
+                }
+                .recap-video {
+                    padding-right: 10px;
                 }
                 .sponsors, .mentors, .contact {
                     font-size: 16px;

@@ -10,6 +10,8 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import ActionAndroid from 'material-ui/svg-icons/action/android'
 import YouTube from 'react-youtube'
 import MovieIcon from 'material-ui/svg-icons/av/play-arrow'
+import CreateIcon from 'material-ui/svg-icons/content/create'
+import imgAd from './img/tshirtad2.png'
 
 class App extends Component {
 
@@ -18,12 +20,12 @@ class App extends Component {
 
         this.state = {
             open: false,
+            openShirt: false,
             player: null
         }
 
         this.onReady = this.onReady.bind(this)
     }
-    
 
     componentDidMount() {
         let illu = document.getElementById("illu");
@@ -67,7 +69,6 @@ class App extends Component {
 
         function loop(){
           t++;
-          
           let particlesNumber = Math.round(rule3(-rotationSpeed, 0, 1000, 1,3));
           let speedParticles = rule3(-rotationSpeed, 0, 1000, 1.5,.2);
           let fireScaleY = .8 + Math.random()*.3 -rotationSpeed/500;
@@ -86,11 +87,11 @@ class App extends Component {
           }
           //*/
           TweenLite.set(fire, {
-            scaleX:fireScaleX, 
+            scaleX:fireScaleX,
             scaleY:fireScaleY
           });
           TweenLite.set(yellowFire, {
-            scale:yellowFireScale, 
+            scale:yellowFireScale,
             rotation:-20 + yellowFireScale*20
           });
           requestAnimationFrame(loop);
@@ -118,6 +119,18 @@ class App extends Component {
 
     _handleRecapVideoClose = () => {
         this.setState({open: false})
+    }
+
+    _handleTshirtContestOpen = () => {
+        this.setState({openShirt: true})
+    }
+
+    _handleTshirtContestClose = () => {
+        this.setState({openShirt: false})
+    }
+
+    _refresh = () => {
+        this.forceUpdate()
     }
 
     render() {
@@ -244,12 +257,21 @@ class App extends Component {
                 </g>
             </svg>
         )
-        
-        const actions = [
+
+        const actionsVideo = [
             <FlatButton
                 label="Close"
                 primary={true}
+                labelStyle={{color: "white"}}
                 onClick={this._handleRecapVideoClose} />
+        ]
+
+        const actionsContest = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                labelStyle={{color: "white"}}
+                onClick={this._handleTshirtContestClose} />
         ]
 
         const muiTheme = getMuiTheme(darkBaseTheme)
@@ -263,28 +285,54 @@ class App extends Component {
                         <div className="content-container">
                             <div className="center-wrapper">
                                 <p className="title">DELTAHACKS 4</p>
+                                <p className="date"> Jan 27 - 28, 2018</p>
                                 {svg}
-                                <RaisedButton
-                                    label="DH3 Recap"
-                                    secondary
-                                    icon={<MovieIcon />}
-                                    onClick={this._handleRecapVideoOpen} >
-                                </RaisedButton>
+                                <div className="button-container">
+                                    <RaisedButton
+                                        className="recap-video"
+                                        label="DH3 Recap"
+                                        labelStyle={{color: "white"}}
+                                        secondary
+                                        icon={<MovieIcon />}
+                                        onClick={this._handleRecapVideoOpen} />
+                                    <RaisedButton
+                                        className="tshirt-contest"
+                                        label="T-Shirt Contest"
+                                        labelStyle={{color: "white"}}
+                                        secondary
+                                        icon={<CreateIcon />}
+                                        onClick={this._handleTshirtContestOpen} />
+                                </div>
                                 <Dialog
-                                    actions={actions}
+                                    autoScrollBodyContent={true}
+                                    actions={actionsContest}
+                                    open={this.state.openShirt}
+                                    bodyStyle={{paddingBottom: '5px', display: "flex", overflowY: "auto", justifyContent: "center"}}
+                                    onRequestClose={this._handleTshirtContestClose}>
+                                    <img className="contestImage" src={imgAd} onLoad={this._refresh} />
+                                </Dialog>
+                                <Dialog
+                                    autoScrollBodyContent={true}
+                                    actions={actionsVideo}
                                     open={this.state.open}
-                                    bodyStyle={{paddingBottom: '0px'}}
+                                    bodyStyle={{paddingBottom: '0px', display: "flex", justifyContent: "center"}}
                                     onRequestClose={this._handleRecapVideoClose}>
                                         <YouTube videoId="QC10NjclAaw" onReady={this.onReady} />
                                 </Dialog>
                                 <p className="sponsors">
-                                    Sponsors - sponsorship@deltahacks.com
+                                    Sponsors:
+                                    <b/>
+                                    <a href="mailto:sponsorship@deltahacks.com"> sponsorship@deltahacks.com</a>
                                 </p>
                                 <p className="mentors">
-                                    Mentors/Judges - relations@deltahacks.com
+                                    Mentors/Judges:
+                                    <b/>
+                                    <a href="mailto:relations@deltahacks.com"> relations@deltahacks.com</a>
                                 </p>
                                 <p className className="contact">
-                                    Contact Us: hello@deltahacks.com
+                                    Contact Us:
+                                    <b/>
+                                    <a href="mailto:hello@deltahacks.com"> hello@deltahacks.com</a>
                                 </p>
                             </div>
                         </div>
